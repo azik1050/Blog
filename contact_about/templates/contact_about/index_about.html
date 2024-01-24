@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	About
+{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <main class="tm-main">
+            <!-- Search form -->
+            {% include 'blog/components/links.html' %}
+            <div class="row tm-row tm-mb-45">
+                <div class="col-12">
+                    <hr class="tm-hr-primary tm-mb-55">
+                    <img src="{{ main.image.url }}" alt="Image" class="img-fluid">
+                </div>
+            </div>
+            <div class="row tm-row tm-mb-40">
+                <div class="col-12">
+                    <div class="mb-4">
+                        <h2 class="pt-2 tm-mb-40 tm-color-primary tm-post-title">{{ main.title }}</h2>
+                        <p>{{ main.text|safe }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row tm-row tm-mb-120">
+            {% if carts %}
+            	{% for cart in carts %}
+                	<div class="col-lg-4 tm-about-col">
+                        <div class="tm-bg-gray tm-about-pad">
+                            <div class="text-center tm-mt-40 tm-mb-60">
+                                <i class="fas fa-bezier-curve fa-4x tm-color-primary"></i>
+                            </div>
+                            <h2 class="mb-3 tm-color-primary tm-post-title">{{ cart.title }}</h2>
+                            <p class="mb-0 tm-line-height-short">
+                                {{ cart.text}}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            </div>
+            <div class="row tm-row tm-mb-60">
+                <div class="col-12">
+                    <hr class="tm-hr-primary  tm-mb-55">
+                </div>
+                {% if staff %}
+                	{% for staf in staff %}
+                		<div class="col-lg-6 tm-mb-60 tm-person-col">
+                            <div class="media tm-person">
+                                <img src="{{ staf.staff.profile.image.url }}" style="width: 140px; height: 210px;" alt="Image" class="img-fluid mr-4">
+                                <div class="media-body">
+                                    <h2 class="tm-color-primary tm-post-title mb-2">{{ staf.staff.username }}</h2>
+                                    <h3 class="tm-h3 mb-3">{{ staf.job }}</h3>
+                                    <p class="mb-0 tm-line-height-short">
+                                        {{ staf.description }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                	{% endfor %}
+                {% endif %}
+            <footer class="row tm-row">
+                <div class="col-md-6 col-12 tm-color-gray">
+                    Design: <a rel="nofollow" target="_parent" href="https://templatemo.com" class="tm-external-link">TemplateMo</a>
+                </div>
+                <div class="col-md-6 col-12 tm-color-gray tm-copyright">
+                    Copyright 2020 Xtra Blog Company Co. Ltd.
+                </div>
+            </footer>
+        </main>
+    </div>
+{% endblock %}

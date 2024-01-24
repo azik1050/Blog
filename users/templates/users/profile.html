@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	Profile
+{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <main class="tm-main">
+            <div class="container">
+                {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                {% endif %}
+                <h1>Your profile</h1>
+                <a href="{% url 'profile_update' %}" class="btn btn-outline-info">Update Profile</a>
+                <div style="display: flex; flex-direction: row; align-content: space-between; justify-content: space-between; width: 600px; margin-top: 20px;">
+                    <div>
+                        <img src="{{ user.profile.image.url }}" alt="Image" class="img-fluid">
+                    </div>
+                    <div>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title" >Name: {{ user.username }}</h2>
+                        <h2 class="tm-pt-30 tm-color-primary tm-post-title" >Email: {{ user.email }}</h2>
+                    </div>
+
+                </div>
+            <h2>Bio</h2>
+            <p>{{ user.profile.bio }}</p>
+            </div>
+        </main>
+    </div>
+{% endblock %}

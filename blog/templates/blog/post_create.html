@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	Add post
+{% endblock %}
+
+
+
+{% block content %}
+
+    <div class="col-lg-7 tm-contact-left mt-5">
+                    <form method="POST" enctype="multipart/form-data" class="mb-5 ml-auto mr-0 tm-contact-form">
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }}">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% csrf_token %}
+                        <h1>Post your blog!</h1>
+                        <div class="form-group row mb-4">
+                            <label for="name" class="col-sm-3 col-form-label text-right tm-color-primary">Category</label>
+                            <div class="col-sm-9">
+                                {{ form.category }}
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label for="email" class="col-sm-3 col-form-label text-right tm-color-primary">Title</label>
+                            <div class="col-sm-9">
+                                {{ form.title }}
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label for="subject" class="col-sm-3 col-form-label text-right tm-color-primary">Slug</label>
+                            <div class="col-sm-9">
+                                {{ form.slug }}
+                            </div>
+                        </div>
+                        <div class="form-group row mb-5">
+                            <label for="message" class="col-sm-3 col-form-label text-right tm-color-primary">Description</label>
+                            <div class="col-sm-9">
+                                {{ form.description }}
+                            </div>
+                        </div>
+                        <div class="form-group row mb-5">
+                            <label for="message" class="col-sm-3 col-form-label text-right tm-color-primary">Content</label>
+                            <div class="col-sm-9">
+                                {{ form.content }}
+                            </div>
+                        </div>
+                        <div class="form-group row mb-5">
+                            <label for="message" class="col-sm-3 col-form-label text-right tm-color-primary">Image</label>
+                            <div class="col-sm-9">
+                                {{ form.image }}
+                            </div>
+                        </div>
+                        <div class="form-group row mb-5">
+                            <label for="message" class="col-sm-3 col-form-label text-right tm-color-primary">Published</label>
+                            <div class="col-sm-9">
+                                {{ form.published }}
+                            </div>
+                        </div>
+                        {{ form.media }}
+                        <div class="form-group row text-right">
+                            <div class="col-12">
+                                <button type="submit" class="tm-btn tm-btn-primary tm-btn-small">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+    </div>
+{% endblock %}

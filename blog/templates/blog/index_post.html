@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+	Post
+{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <main class="tm-main">
+            <div class="row tm-row">
+                <div class="col-lg-8 tm-post-col">
+                    <div class="tm-post-full">
+                        <div class="mb-4">
+                            <h2 class="pt-2 tm-color-primary tm-post-title">{{ post.title }}</h2>
+                            {% if post.author == user %}
+                                <a href="{% url 'post_update' post.slug %}" class="btn btn-info">Update the post</a>
+                            {% endif %}
+                            <p class="tm-mb-40">{{ post.updated_at.date }} posted by {{ post.author }}</p>
+                            <p>{{ post.content|safe }}</p>
+                            <span class="d-block text-right tm-color-primary">
+                                {% for category in post.category.all %}
+                                    {% if forloop.last %}
+                                    	{{ category }}
+                                    {% else %}
+                                        {{ category }},
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
+                        </div>
+                        {% if comments %}
+                            <h2 class="tm-color-primary tm-post-title">Comments</h2>
+                        	{% for comment in comments %}
+                                {% if forloop.first %}
+                                	<div>
+                                    <hr class="tm-hr-primary tm-mb-45">
+                                    <div class="tm-comment tm-mb-45">
+                                        <figure class="tm-comment-figure" style="max-width: 100px; max-height: 100px;">
+                                                <img src="{{ comment.author.profile.image.url }}" alt="Image" class="mb-2 rounded-circle img-thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+                                                <figcaption class="tm-color-primary text-center">{{ comment.author }}</figcaption>
+                                        </figure>
+                                        <div>
+                                            <p>{{ comment.message }}</p>
+                                            <div class="d-flex justify-content-between">
+                                                <a href="#" class="tm-color-primary">REPLY</a>
+                                                <span class="tm-color-primary">{{ comment.sent_at.date }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% else %}
+                                    <div class="tm-comment-reply tm-mb-45">
+                                        <hr>
+                                        <div class="tm-comment">
+                                            <figure class="tm-comment-figure" style="max-width: 100px; max-height: 100px;">
+                                                <img src="{{ comment.author.profile.image.url }}" alt="Image" class="mb-2 rounded-circle img-thumbnail" style="width: 100%; height: 100%; object-fit: cover;">
+                                                <figcaption class="tm-color-primary text-center">{{ comment.author }}</figcaption>
+                                            </figure>
+                                            <p>{{ comment.message }}</p>
+                                        </div>
+                                        <span class="d-block text-right tm-color-primary">{{ comment.sent_at.date }}</span>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                                    <form method="post" class="mb-5 tm-comment-form">
+                                        {% csrf_token %}
+                                        <h2 class="tm-color-primary tm-post-title mb-4">Your comment</h2>
+                                        {{ form.message }}
+                                        <div class="text-right">
+                                            <button class="tm-btn tm-btn-primary tm-btn-small" type="submit">Submit</button>
+                                        </div>
+                                    </form>
+                    </div>
+                </div>
+                <aside class="col-lg-4 tm-aside-col">
+                    <div class="tm-post-sidebar">
+                        <hr class="mb-3 tm-hr-primary">
+                        <h2 class="mb-4 tm-post-title tm-color-primary">Categories</h2>
+                        <ul class="tm-mb-75 pl-5 tm-category-list">
+                            {% for category in categories %}
+                            	<li><a href="{% url 'post_category' category.slug %}" class="tm-color-primary">{{ category }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        <hr class="mb-3 tm-hr-primary">
+                        <h2 class="tm-mb-40 tm-post-title tm-color-primary">Related Posts</h2>
+                        {% for p in posts %}
+                            <a href="#" class="d-block tm-mb-40">
+                                <figure>
+                                    <img src="{{ p.image.url }}" alt="Image" class="mb-3 img-fluid">
+                                    <a href="{% url 'main_post' p.slug %}"><figcaption class="tm-color-primary">{{ p.title }}</figcaption></a>
+                                </figure>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </aside>
+            </div>
+            <footer class="row tm-row">
+                <div class="col-md-6 col-12 tm-color-gray">
+                    Design: <a rel="nofollow" target="_parent" href="https://templatemo.com" class="tm-external-link">TemplateMo</a>
+                </div>
+                <div class="col-md-6 col-12 tm-color-gray tm-copyright">
+                    Copyright 2020 Xtra Blog Company Co. Ltd.
+                </div>
+            </footer>
+        </main>
+    </div>
+{% endblock %}
